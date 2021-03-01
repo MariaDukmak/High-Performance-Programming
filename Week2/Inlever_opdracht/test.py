@@ -1,4 +1,4 @@
-from Week2.Inlever_opdracht.merge_sort import generate_list, merge_sort_parallel
+from Week2.Inlever_opdracht.mulriprocesse_merge_sort import generate_list, merge_sort_parallel
 import unittest
 
 
