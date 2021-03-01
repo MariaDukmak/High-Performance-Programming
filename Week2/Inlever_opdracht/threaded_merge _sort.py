@@ -1,61 +1,7 @@
-import random, statistics, time, concurrent.futures
+from Week2.Inlever_opdracht.mulriprocesse_merge_sort import generate_list, merge, merge_sort, get_time
+import statistics,  concurrent.futures
 import seaborn as sns, matplotlib.pyplot as plt
 from typing import List
-
-
-def generate_list(size: int = 8) -> list:
-    """
-    Een functie die een lijst genereerd van 8 getallen.
-    Return:
-    ------
-    Een lijst van 8 getallen
-    """
-    return [(random.randint(0, 100)) for _ in range(size)]
-
-
-def merge(*args):
-    """
-    Een functie die de merge  van sublijsten doet
-    Return:
-    ------
-    new_lijst: List
-        Een gesorteerde sublijst
-    """
-    new_lijst = []
-    left, right = args[0] if len(args) == 1 else args
-    left_index, right_index = 0, 0
-
-    while left_index < len(left) and right_index < len(right):
-        if left[left_index] <= right[right_index]:
-            new_lijst.append(left[left_index])
-            left_index += 1
-        else:
-            new_lijst.append(right[right_index])
-            right_index += 1
-    if left_index == len(left):
-        new_lijst.extend(right[right_index:])
-    else:
-        new_lijst.extend(left[left_index:])
-
-    return new_lijst
-
-
-def merge_sort(lijst: List[int]):
-    """
-    Een implementatie van de merge sort algoritme.
-    Dit werkt zoals in de notebook uitegelged is
-
-    Return:
-    ------
-        Een recursive aanroep voor de functie merge
-    """
-    if len(lijst) <= 1:
-        return lijst
-
-    middel = int(len(lijst)/2)
-    left = merge_sort(lijst[:middel])
-    right = merge_sort(lijst[middel:])
-    return merge(left, right)
 
 
 def split_for_threading(lijst: List[int], threads: int):
@@ -77,7 +23,7 @@ def split_for_threading(lijst: List[int], threads: int):
     return full_list
 
 
-def merge_sort_parallel(lijst: List[int], threads: int):
+def merge_sort_parallel_thread(lijst: List[int], threads: int):
     """
     Een functie die de pool van de threads aanmaakt en joint.
     De functie split_for_multiprocess aanroept om de lijst naar
@@ -101,26 +47,6 @@ def merge_sort_parallel(lijst: List[int], threads: int):
         return lijst
 
 
-def get_time(lijst: List[int], threads: List[int]):
-    """
-    Een functie die de runtime voor de processen berekent.
-
-    Return:
-    ------
-    duration: List
-        Een lijst met runtimes van alle processen
-    """
-    duration = []
-    for thread in threads:
-        start = time.time()
-        merge_sort_parallel(lijst, thread)
-        end = time.time()
-
-        duration.append(end - start)
-        print(f'Parallel Merge Sort with {thread} process(es) took {duration[-1]:.5f} second(s)')
-    return duration
-
-
 def plot_grafiek(times: List[float], threads: List[int]):
     """
     Een functie die een plot maakt van de runtime per process.
@@ -142,8 +68,8 @@ def plot_grafiek(times: List[float], threads: List[int]):
 
 if __name__ == "__main__":
     threads = [1, 2, 4, 8]
-    random_list = generate_list(50000)
-    results = get_time(random_list, threads=threads)
+    random_list = generate_list()
+    results = get_time(random_list, threads)
 
     plot_grafiek(results, threads)
 
