@@ -53,10 +53,10 @@ int main (int argc, char *argv[]) {
    MPI_Finalize();
 
    totalTime = MPI_Wtime() - startTime;
-   /*if (id == 0) {
+   if (id == 0) {
          printf("Total sum = %d\n", global_sum);
          printf("Total time = %f\n", totalTime); 
-}*/
+}
    // fflush (stdout);
    
 
