@@ -25,7 +25,7 @@ def test_priemgetal():
 if __name__ == "__main__":
 
     start_time = time.time()
-    priemgetallen, count = priemgetal(1000)
+    priemgetallen, count = priemgetal(1000000000)
     total_time = time.time() - start_time
 
     print(f"Totaal: {count}")
