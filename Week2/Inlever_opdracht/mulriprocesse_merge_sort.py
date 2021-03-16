@@ -121,7 +121,7 @@ def get_time(lijst: List[int], processes: List[int]):
     return duration
 
 
-def plot_grafiek(times: List[float], processes: List[int]):
+def plot_grafiek(times: List[float], processes: List[int], len_list):
     """
     Een functie die een plot maakt van de runtime per process.
     Er wordt ook een bereking gemaakt voor het gemiddelde en de std van de runtimes.
@@ -131,10 +131,10 @@ def plot_grafiek(times: List[float], processes: List[int]):
     Een scatterplot
     """
 
-    sns.scatterplot(processes, times)
+    sns.lineplot(processes, times)
     plt.xlabel("number of process(es)")
     plt.ylabel("time in second(s)")
-    plt.title("Runtime merge sort using multiprocessing")
+    plt.title(f"Runtime merge sort using multiprocessing for  {len_list}" )
     plt.show()
     print(f'Parallel Merge Sort with {len(processes)} workers has average runtime {statistics.mean(times):.5f} second(s) '
           f'and a std of {statistics.stdev(times):5f} second(s)')
@@ -142,10 +142,10 @@ def plot_grafiek(times: List[float], processes: List[int]):
 
 if __name__ == "__main__":
     processen = [1, 2, 4, 8]
-    random_list = generate_list()
+    random_list = generate_list(100000)
     results = get_time(random_list, processes=processen)
 
-    plot_grafiek(results, processen)
+    plot_grafiek(results, processen, len(random_list))
 
 # Bronnen:
     # https://devopslog.wordpress.com/2012/04/15/mergesort-example-using-python-multiprocessing/

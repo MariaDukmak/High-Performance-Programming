@@ -1,4 +1,6 @@
-from Week2.Inlever_opdracht.mulriprocesse_merge_sort import generate_list, merge, merge_sort, get_time
+import time
+
+from Week2.Inlever_opdracht.mulriprocesse_merge_sort import generate_list, merge, merge_sort
 import statistics,  concurrent.futures
 import seaborn as sns, matplotlib.pyplot as plt
 from typing import List
@@ -43,11 +45,30 @@ def merge_sort_parallel_thread(lijst: List[int], threads: int):
         while len(lijst) > 1:
             lijst = [(lijst[i], lijst[i + 1]) for i in range(0, len(lijst), 2)]
             lijst = list(executor.map(merge, lijst))
-            print(lijst)
         return lijst
 
 
-def plot_grafiek(times: List[float], threads: List[int]):
+def get_time(lijst: List[int], processes: List[int]):
+    """
+    Een functie die de runtime voor de processen berekent.
+
+    Return:
+    ------
+    duration: List
+        Een lijst met runtimes van alle processen
+    """
+    duration = []
+    for process in processes:
+        start = time.time()
+        merge_sort_parallel_thread(lijst, process)
+        end = time.time()
+
+        duration.append(end - start)
+        print(f'Parallel Merge Sort with {process} process(es) took {duration[-1]:.5f} second(s)')
+    return duration
+
+
+def plot_grafiek(times: List[float], threads: List[int], lenlist):
     """
     Een functie die een plot maakt van de runtime per process.
     Er wordt ook een bereking gemaakt voor het gemiddelde en de std van de runtimes.
@@ -58,9 +79,9 @@ def plot_grafiek(times: List[float], threads: List[int]):
     """
 
     sns.scatterplot(threads, times)
-    plt.xlabel("number of process(es)")
+    plt.xlabel("number of thread(es)")
     plt.ylabel("time in second(s)")
-    plt.title("Runtime merge sort using multithreading")
+    plt.title(f"Runtime merge sort using threads {lenlist}")
     plt.show()
     print(f'Parallel Merge Sort with {len(threads)} workers has average runtime {statistics.mean(times):.5f} second(s) '
           f'and a std of {statistics.stdev(times):5f} second(s)')
@@ -68,9 +89,9 @@ def plot_grafiek(times: List[float], threads: List[int]):
 
 if __name__ == "__main__":
     threads = [1, 2, 4, 8]
-    random_list = generate_list()
+    random_list = generate_list(100000)
     results = get_time(random_list, threads)
 
-    plot_grafiek(results, threads)
+    plot_grafiek(results, threads, len(random_list))
 
 

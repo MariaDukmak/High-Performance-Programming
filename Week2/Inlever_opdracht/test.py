@@ -1,5 +1,5 @@
 from Week2.Inlever_opdracht.mulriprocesse_merge_sort import generate_list, merge_sort_parallel
-from Week2.Inlever_opdracht.threaded_merge _sort import merge_sort_parallel_thread
+# from Week2.Inlever_opdracht.threaded_merge _sort import merge_sort_parallel_thread
 
 import unittest
 
