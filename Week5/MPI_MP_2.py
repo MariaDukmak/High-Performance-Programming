@@ -1,3 +1,7 @@
+"""
+In de code hieronder maak ik gebruik van MPI en MP om de priem getallen in N te vinden.
+"""
+
 import time
 from sys import argv
 import numpy as np
@@ -6,6 +10,9 @@ import concurrent.futures
 from multiprocessing import Pool
 
 def zeef_vector(N):
+    """
+
+    """
     k = 2
     zeef = np.full(N, True, dtype=bool)
     root_N = int(N**0.5)
@@ -50,18 +57,20 @@ if __name__ == "__main__":
     end = (rank*N) + N
     start = (N//size) * rank
     N_root = end**0.5
-
+    list_data = []
     # processen = []
     if rank == 0:
         # start_time = time.time() # start time tracking
         N_list = np.full((N//size)+1, True, dtype=bool)
         N_list[0:2] = False
 
-        list_data = [(N_list, i, end) for i in range(k, int(N_root))]
+        for i in range(k, int(N_list)):
+            list_data.append((N_list, i, end))
         with concurrent.futures.ProcessPoolExecutor() as executor:
             executor.map(zeef, N_list)
 
     else:
+
         N_list = np.full((N//size), True, dtype=bool)
 
         while k**2 <= end:
