@@ -61,20 +61,20 @@ def test_priemgetal():
 if __name__ == "__main__":
 
     start_time = time.time()
-    priemgetallen = sequentiele_zeef_vector(10)
+    priemgetallen = sequentiele_zeef_vector(100000)
     total_time = time.time() - start_time
 
     print(f"Lijst van alle priemgetallen: {priemgetallen}")
-    print(f"Sequential algorithm took: {total_time:.4f} second(s)")
+    print(f"Sequential algorithm took: {total_time:.6f} second(s)")
 
     # Check of het algoritme goed werkt
     test_priemgetal()
 
     # Run de normale zeef
     start_time = time.time()
-    priemgetallen, count = sequentiele_zeef(10)
+    priemgetallen, count = sequentiele_zeef(100000)
     total_time = time.time() - start_time
 
     print(f"Totaal: {count}")
-    print(f"Lijst van alle priemgetallen: {priemgetallen}")
+    # print(f"Lijst van alle priemgetallen: {priemgetallen}")
     print(f"Sequential algorithm took: {total_time:.4f} second(s)")
