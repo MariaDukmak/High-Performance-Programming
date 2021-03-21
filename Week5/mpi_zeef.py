@@ -9,10 +9,9 @@ start_time = time.time()
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 size = comm.Get_size()
-# print('Process {} out of {}'.format(rank,size))
 
 start_num = (rank * 2) + 1
-maximum = 1000000
+maximum = 1000
 
 priem = [] # list with all the prime numbers
 
